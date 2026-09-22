@@ -829,7 +829,7 @@ footer .disc p{margin:10px 0 0}
           <ol><li>Перейдите на сайт УК или отсканируйте QR-код</li><li>Пройдите быструю идентификацию или авторизуйтесь через Госуслуги</li><li>Подайте заявку на приобретение паёв фонда «Матрёшка а-ля Рус»</li></ol>
         </div>
         <div class="act">
-          <a class="btn btn-primary" href="https://www.alfacapital.ru/disclosure/pifs/opif-matryoshka/" target="_blank" rel="noopener">Открыть →</a>
+          <a class="btn btn-primary" href="https://promo.alfacapital.ru/matryoshka-rus" target="_blank" rel="noopener">Открыть →</a>
           <div class="qrmini"><img src="%%QR_ALFA%%" alt="QR — Альфа-Капитал"></div>
         </div>
       </div>
