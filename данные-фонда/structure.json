@@ -1,0 +1,114 @@
+{
+  "source": "https://finuslugi.ru/invest/funds/93f882f5-f205-42bc-83ce-c069cc9027bf",
+  "isin": "RU000A10B917",
+  "registrationNumber": "6931",
+  "registrationDate": "2025-03-27",
+  "risk": "HIGH",
+  "fundsObjectNameRus": "Смешанный",
+  "structureDate": "2026-09-01",
+  "issuers": [
+    {
+      "name": "ДОМ.РФ",
+      "percent": 9.37
+    },
+    {
+      "name": "Россети Ленэнерго",
+      "percent": 8.91
+    },
+    {
+      "name": "Газпром Нефть",
+      "percent": 8.87
+    },
+    {
+      "name": "МТС",
+      "percent": 8.86
+    },
+    {
+      "name": "Сургутнефтегаз",
+      "percent": 8.09
+    },
+    {
+      "name": "Лукойл",
+      "percent": 7.61
+    },
+    {
+      "name": "Сбербанк России",
+      "percent": 7.57
+    },
+    {
+      "name": "НОВАТЭК",
+      "percent": 7.13
+    },
+    {
+      "name": "Россети Урал",
+      "percent": 6.12
+    },
+    {
+      "name": "Россети Центр и Приволжье",
+      "percent": 5.98
+    },
+    {
+      "name": "Другие",
+      "percent": 21.49
+    }
+  ],
+  "sectors": [
+    {
+      "name": "Нефтегаз и энергетика",
+      "percent": 67.06
+    },
+    {
+      "name": "Банки",
+      "percent": 16.94
+    },
+    {
+      "name": "Телекоммуникационные услуги",
+      "percent": 8.86
+    },
+    {
+      "name": "Материалы",
+      "percent": 3.09
+    },
+    {
+      "name": "Государственный сектор",
+      "percent": 2.85
+    },
+    {
+      "name": "Прочее",
+      "percent": 1.2
+    }
+  ],
+  "types": [
+    {
+      "name": "Акции",
+      "percent": 91.7
+    },
+    {
+      "name": "Корпоративные облигации",
+      "percent": 4.25
+    },
+    {
+      "name": "Ценные бумаги РФ",
+      "percent": 2.85
+    },
+    {
+      "name": "Прочее",
+      "percent": 1.2
+    }
+  ],
+  "yield": {
+    "month": 0.3666,
+    "quarter": -0.4847,
+    "halfYear": -2.0446,
+    "year": 5.8845,
+    "threeYear": null,
+    "fiveYear": null,
+    "all": 14.9915,
+    "date": "2026-09-01"
+  },
+  "nav": {
+    "date": "2026-09-01",
+    "nav": 71734564.86,
+    "price": 114.98
+  }
+}

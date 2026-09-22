@@ -1,0 +1,13 @@
+# генерируемый артефакт — собирается из build.py
+index.html
+
+# python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# тяжёлый бэкап оригинала фото (в сборке используется ассеты/AuthorPhoto.jpg)
+ассеты/*_full.jpg

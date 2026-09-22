@@ -1,0 +1,54 @@
+name: Сборка и публикация лендинга
+
+# По будням в 16:20 МСК (13:20 UTC) — через ~20 мин после обновления трекера,
+# чтобы забрать свежую базу. Плюс кнопка ручного запуска.
+on:
+  schedule:
+    - cron: "20 13 * * 1-5"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+# Не даём двум сборкам публиковать одновременно.
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Код лендинга
+        uses: actions/checkout@v4
+
+      - name: Свежая база из трекера
+        uses: actions/checkout@v4
+        with:
+          repository: skoob-kudrik/matryoshka-tracker
+          path: _tracker
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Сборка index.html
+        env:
+          MATRYOSHKA_DB: ${{ github.workspace }}/_tracker/matryoshka.db
+          ONEPAGER_DIR: ${{ github.workspace }}/данные-фонда
+        run: python3 build.py
+
+      - name: Публикация в Object Storage
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.YC_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.YC_SECRET }}
+          YC_BUCKET: ${{ secrets.YC_BUCKET }}
+        run: |
+          S3="aws --endpoint-url https://storage.yandexcloud.net --region ru-central1 s3"
+          $S3 cp index.html "s3://$YC_BUCKET/index.html" \
+            --content-type "text/html; charset=utf-8" \
+            --cache-control "no-cache, max-age=0"
+          $S3 sync документы "s3://$YC_BUCKET/документы" \
+            --content-type "application/pdf" \
+            --cache-control "public, max-age=86400" \
+            --delete
