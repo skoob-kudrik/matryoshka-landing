@@ -28,6 +28,14 @@ export AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY:-${YC_SECRET:-}}"
 : "${AWS_ACCESS_KEY_ID:?нужен ключ доступа (AWS_ACCESS_KEY_ID или YC_KEY_ID)}"
 : "${AWS_SECRET_ACCESS_KEY:?нужен секрет (AWS_SECRET_ACCESS_KEY или YC_SECRET)}"
 
+# aws может быть установлен через pip --user и не лежать в PATH
+if ! command -v aws >/dev/null 2>&1; then
+  for d in "$HOME"/Library/Python/*/bin "$HOME/.local/bin"; do
+    [ -x "$d/aws" ] && PATH="$d:$PATH" && break
+  done
+fi
+command -v aws >/dev/null 2>&1 || { echo "✗ не найден aws CLI (pip3 install --user awscli)"; exit 1; }
+
 ENDPOINT="https://storage.yandexcloud.net"
 REGION="ru-central1"
 S3="aws --endpoint-url $ENDPOINT --region $REGION s3"
@@ -44,6 +52,7 @@ echo "▸ синхронизация документов"
 $S3 sync документы "s3://$YC_BUCKET/документы" \
   --content-type "application/pdf" \
   --cache-control "public, max-age=86400" \
+  --exclude "*" --include "*.pdf" \
   --delete
 
 if [ -n "${YC_CDN_RESOURCE_ID:-}" ]; then

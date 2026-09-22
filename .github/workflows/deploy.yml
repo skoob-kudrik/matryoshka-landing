@@ -51,4 +51,5 @@ jobs:
           $S3 sync документы "s3://$YC_BUCKET/документы" \
             --content-type "application/pdf" \
             --cache-control "public, max-age=86400" \
+            --exclude "*" --include "*.pdf" \
             --delete
