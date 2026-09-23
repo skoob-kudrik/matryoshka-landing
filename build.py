@@ -869,7 +869,7 @@ footer .disc p{margin:10px 0 0}
     <p class="lead">Упоминания в новостях, прессе и видео.</p>
     <div class="press" style="margin-top:22px">
       <div class="press-video">
-        <iframe src="https://www.youtube.com/embed/uBr0lDyp-aQ?si=O0WMci5xBP6Ir-_N" title="10 лет инвестиций и ВЫВОД, который должен услышать каждый" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <iframe src="https://vkvideo.ru/video_ext.php?oid=-203057439&id=456239411&hash=2d0dfd9d729c8315&hd=4" title="10 лет инвестиций и ВЫВОД, который должен услышать каждый" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
       </div>
       <div class="press-list">
         <a class="p" href="https://investfunds.ru/news/172453/" target="_blank" rel="noopener"><div class="src">Investfunds · 11 августа 2026</div><div class="t">Успех авторских стратегий в июле — вернут ли они веру пайщиков в фонды акций</div><span class="lnk">Читать материал →</span></a>
