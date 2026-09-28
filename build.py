@@ -342,6 +342,27 @@ TEMPLATE = r"""<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ОПИФ «Матрёшка а-ля Рус» — активно управляемый фонд российских акций</title>
 <meta name="description" content="Активно управляемый открытый ПИФ российских дивидендных акций. С запуска фонд опережает индекс МосБиржи полной доходности на %%KPI_DIFF%% п.п.">
+<link rel="canonical" href="https://www.matreshkarusfund.ru/">
+<!-- лого на вкладке браузера (встроено base64, как и остальные картинки) -->
+<link rel="icon" type="image/png" href="%%LOGO%%">
+<link rel="apple-touch-icon" href="%%LOGO%%">
+<!-- превью при отправке ссылки в мессенджеры/соцсети (Open Graph + Twitter).
+     og:image — обязательно абсолютный URL реального файла (data-URI краулеры не читают). -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ОПИФ «Матрёшка а-ля Рус»">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://www.matreshkarusfund.ru/">
+<meta property="og:title" content="ОПИФ «Матрёшка а-ля Рус» — активно управляемый фонд российских акций">
+<meta property="og:description" content="Активно управляемый открытый ПИФ российских дивидендных акций. С запуска фонд опережает индекс МосБиржи полной доходности на %%KPI_DIFF%% п.п.">
+<meta property="og:image" content="https://www.matreshkarusfund.ru/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ОПИФ «Матрёшка а-ля Рус» — активно управляемый фонд российских акций">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ОПИФ «Матрёшка а-ля Рус» — активно управляемый фонд российских акций">
+<meta name="twitter:description" content="Активно управляемый открытый ПИФ российских дивидендных акций. С запуска фонд опережает индекс МосБиржи полной доходности на %%KPI_DIFF%% п.п.">
+<meta name="twitter:image" content="https://www.matreshkarusfund.ru/og-image.png">
 <style>
 :root{
   --purple:#442B77; --purple-mid:#624997; --purple-lt:#9380BA; --tint:#F4F0FF;

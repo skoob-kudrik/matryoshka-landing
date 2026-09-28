@@ -48,6 +48,11 @@ $S3 cp index.html "s3://$YC_BUCKET/index.html" \
   --content-type "text/html; charset=utf-8" \
   --cache-control "no-cache, max-age=0"
 
+echo "▸ заливка og-image.png (превью для мессенджеров)"
+$S3 cp og-image.png "s3://$YC_BUCKET/og-image.png" \
+  --content-type "image/png" \
+  --cache-control "public, max-age=86400"
+
 echo "▸ синхронизация документов"
 $S3 sync документы "s3://$YC_BUCKET/документы" \
   --content-type "application/pdf" \
