@@ -615,7 +615,7 @@ footer .disc p{margin:10px 0 0}
 <!-- ═══ NAV ═══ -->
 <nav class="nav">
   <div class="wrap">
-    <a class="brand" href="#top"><img src="%%LOGO%%" alt="">ОПИФ «Матрёшка&nbsp;а-ля&nbsp;Рус»</a>
+    <a class="brand" href="#top"><img src="%%LOGO%%" alt="">Матрёшка&nbsp;а-ля&nbsp;Рус</a>
     <div class="nav-links">
       <a href="#manager">Управляющий</a>
       <a href="#strategy">Стратегия</a>
