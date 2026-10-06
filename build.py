@@ -525,6 +525,17 @@ table.ret td.rl,table.ret th:first-child{text-align:left;font-weight:700}
 table.ret .pos{color:var(--pos);font-weight:800}
 table.ret .neg{color:var(--neg);font-weight:800}
 table.ret .diff{color:var(--purple);font-weight:800}
+/* числа не переносим — "+15,11 п.п." всегда в одну строку; подпись периода может переноситься */
+table.ret td:not(.rl),table.ret th:not(:first-child){white-space:nowrap}
+/* страховка: на совсем узких экранах прокручивается только таблица, а не вся страница */
+.ret-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+/* мобильная компоновка: ужимаем таблицу и карточки, чтобы вписать в ширину экрана */
+@media(max-width:560px){
+  .card{padding:20px}
+  table.ret{font-size:12.5px}
+  table.ret th,table.ret td{padding:9px 6px}
+  table.ret th{font-size:10.5px;letter-spacing:.02em}
+}
 .mini{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .mini .m{background:var(--tint);border-radius:14px;padding:16px}
 .mini .m .l{font-size:12px;color:var(--gray);font-weight:700}
@@ -781,10 +792,12 @@ footer .disc p{margin:10px 0 0}
     <div class="results-grid">
       <div class="card">
         <h3 style="color:var(--purple);font-weight:800;margin-bottom:10px">Доходность по периодам</h3>
+        <div class="ret-wrap">
         <table class="ret">
           <thead><tr><th>Период</th><th>Фонд</th><th>Индикатор</th><th>Разница</th></tr></thead>
           <tbody>%%RETURNS_TABLE%%</tbody>
         </table>
+        </div>
         <p class="note">Данные на %%ASOF%%.</p>
       </div>
       <div class="card">
