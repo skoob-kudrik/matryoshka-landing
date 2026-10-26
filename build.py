@@ -62,6 +62,11 @@ RANK_URL = ("https://investfunds.ru/funds/?qual=on&scroll_to_table=1&page=1&limi
 FUND_ID = "12035"      # id «Матрёшка а-ля Рус» на investfunds.ru
 RANK_EQUITY = "№1"    # запасное значение
 
+# Номер счётчика Яндекс.Метрики (8 цифр). Пусто → счётчик не подключается,
+# а цели-конверсии (goal(...)) молча ничего не делают. Не секрет — виден в коде
+# страницы, в ~/secrets.env класть не нужно. Можно переопределить env METRIKA_ID.
+METRIKA_ID = os.environ.get("METRIKA_ID", "").strip()
+
 
 # ── утилиты форматирования ───────────────────────────────────────────────────
 def ruf(x, digits=2, sign=False):
@@ -292,7 +297,30 @@ def build():
     logo_fin = data_uri(ASSETS / "Finuslugi.png")
     logo_alfa = data_uri(ASSETS / "Alfacapital.png")
 
+    # ── Яндекс.Метрика: сниппет счётчика + помощник goal() для целей-конверсий ──
+    # goal() определяется всегда, поэтому onclick="goal(...)" не падает и без счётчика
+    # (пока ym не загружен — молча ничего не делает). Сам счётчик и пиксель-заглушка
+    # добавляются только когда METRIKA_ID задан.
+    mid = METRIKA_ID if METRIKA_ID.isdigit() else ""
+    metrika = ("<script>var MID=%s;"
+               "function goal(n){try{if(window.ym)ym(MID,'reachGoal',n)}catch(e){}}"
+               % (mid or "0"))
+    if mid:
+        metrika += (
+            "(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};"
+            "m[i].l=1*new Date();for(var j=0;j<e.scripts.length;j++){if(e.scripts[j].src===r)return;}"
+            "k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,"
+            "a.parentNode.insertBefore(k,a)})(window,document,'script',"
+            "'https://mc.yandex.ru/metrika/tag.js','ym');"
+            "ym(MID,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});"
+            "</script>"
+            '<noscript><div><img src="https://mc.yandex.ru/watch/%s" '
+            'style="position:absolute;left:-9999px" alt="" /></div></noscript>' % mid)
+    else:
+        metrika += "</script>"
+
     repl = {
+        "%%METRIKA%%": metrika,
         "%%LOGO%%": logo,
         "%%PHOTO%%": photo,
         "%%QR_FIN%%": qr_fin,
@@ -340,6 +368,7 @@ TEMPLATE = r"""<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+%%METRIKA%%
 <title>ОПИФ «Матрёшка а-ля Рус» — активно управляемый фонд российских акций</title>
 <meta name="description" content="Активно управляемый открытый ПИФ российских дивидендных акций. С запуска фонд опережает индекс МосБиржи полной доходности на %%KPI_DIFF%% п.п.">
 <link rel="canonical" href="https://www.matreshkarusfund.ru/">
@@ -634,7 +663,7 @@ footer .disc p{margin:10px 0 0}
       <a href="#invest">Как купить</a>
       <a href="#faq">Вопросы</a>
     </div>
-    <a class="btn btn-primary" href="#invest">Инвестировать</a>
+    <a class="btn btn-primary" href="#invest" onclick="goal('cta_invest')">Инвестировать</a>
   </div>
 </nav>
 
@@ -655,7 +684,7 @@ footer .disc p{margin:10px 0 0}
           <span class="big">%%RANK%%</span>
           <span class="cap">по доходности среди публичных фондов акций</span>
         </div>
-        <a class="btn btn-primary" href="#invest">Инвестировать</a>
+        <a class="btn btn-primary" href="#invest" onclick="goal('cta_invest')">Инвестировать</a>
       </div>
     </div>
     <div class="hero-visual">
@@ -848,7 +877,7 @@ footer .disc p{margin:10px 0 0}
           <ol><li>Откройте страницу фонда или отсканируйте QR-код.</li><li>Авторизуйтесь через Госуслуги.</li><li>Укажите сумму, оформите заявку и подтвердите покупку.</li></ol>
         </div>
         <div class="act">
-          <a class="btn btn-primary" href="https://finuslugi.ru/invest/funds/93f882f5-f205-42bc-83ce-c069cc9027bf" target="_blank" rel="noopener">Открыть →</a>
+          <a class="btn btn-primary" href="https://finuslugi.ru/invest/funds/93f882f5-f205-42bc-83ce-c069cc9027bf" target="_blank" rel="noopener" onclick="goal('buy_finuslugi')">Открыть →</a>
           <div class="qrmini"><img src="%%QR_FIN%%" alt="QR — Финуслуги"></div>
         </div>
       </div>
@@ -863,7 +892,7 @@ footer .disc p{margin:10px 0 0}
           <ol><li>Перейдите на сайт УК или отсканируйте QR-код</li><li>Пройдите быструю идентификацию или авторизуйтесь через Госуслуги</li><li>Подайте заявку на приобретение паёв фонда «Матрёшка а-ля Рус»</li></ol>
         </div>
         <div class="act">
-          <a class="btn btn-primary" href="https://promo.alfacapital.ru/matryoshka-rus" target="_blank" rel="noopener">Открыть →</a>
+          <a class="btn btn-primary" href="https://promo.alfacapital.ru/matryoshka-rus" target="_blank" rel="noopener" onclick="goal('buy_alfa')">Открыть →</a>
           <div class="qrmini"><img src="%%QR_ALFA%%" alt="QR — Альфа-Капитал"></div>
         </div>
       </div>
@@ -906,9 +935,9 @@ footer .disc p{margin:10px 0 0}
         <iframe src="https://vkvideo.ru/video_ext.php?oid=-203057439&id=456239411&hash=2d0dfd9d729c8315&hd=4" title="10 лет инвестиций и ВЫВОД, который должен услышать каждый" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
       </div>
       <div class="press-list">
-        <a class="p" href="https://investfunds.ru/news/172453/" target="_blank" rel="noopener"><div class="src">Investfunds · 11 августа 2026</div><div class="t">Успех авторских стратегий в июле — вернут ли они веру пайщиков в фонды акций</div><span class="lnk">Читать материал →</span></a>
-        <a class="p" href="https://www.forbes.ru/investicii/545073-tri-blogera-na-mosbirze-kak-avtory-telegram-kanalov-zapuskaut-sobstvennye-fondy" target="_blank" rel="noopener"><div class="src">Forbes · 3 сентября 2025</div><div class="t">Три блогера на Мосбирже: как авторы Telegram-каналов запускают собственные фонды</div><span class="lnk">Читать материал →</span></a>
-        <a class="p" href="https://www.rbc.ru/newspaper/2025/04/23/680671ea9a79471799084b4b" target="_blank" rel="noopener"><div class="src">РБК · 23 апреля 2025</div><div class="t">Пай по авторскому рецепту</div><span class="lnk">Читать материал →</span></a>
+        <a class="p" href="https://investfunds.ru/news/172453/" target="_blank" rel="noopener" onclick="goal('press_click')"><div class="src">Investfunds · 11 августа 2026</div><div class="t">Успех авторских стратегий в июле — вернут ли они веру пайщиков в фонды акций</div><span class="lnk">Читать материал →</span></a>
+        <a class="p" href="https://www.forbes.ru/investicii/545073-tri-blogera-na-mosbirze-kak-avtory-telegram-kanalov-zapuskaut-sobstvennye-fondy" target="_blank" rel="noopener" onclick="goal('press_click')"><div class="src">Forbes · 3 сентября 2025</div><div class="t">Три блогера на Мосбирже: как авторы Telegram-каналов запускают собственные фонды</div><span class="lnk">Читать материал →</span></a>
+        <a class="p" href="https://www.rbc.ru/newspaper/2025/04/23/680671ea9a79471799084b4b" target="_blank" rel="noopener" onclick="goal('press_click')"><div class="src">РБК · 23 апреля 2025</div><div class="t">Пай по авторскому рецепту</div><span class="lnk">Читать материал →</span></a>
       </div>
     </div>
   </div>
@@ -952,7 +981,7 @@ footer .disc p{margin:10px 0 0}
       <div class="contact-item"><div class="ic">📣</div><div><div class="l">Канал фонда в Telegram</div><div class="v"><a href="https://t.me/MatreshkaRusFund" target="_blank" rel="noopener">@MatreshkaRusFund</a></div></div></div>
       <div class="contact-item"><div class="ic">📞</div><div><div class="l">Горячая линия УК «Альфа-Капитал»</div><div class="v"><a href="tel:+78002002828">+7 (800) 200-28-28</a></div></div></div>
     </div>
-    <div style="margin-top:22px"><a class="btn btn-primary" href="#invest">Перейти к покупке паёв →</a></div>
+    <div style="margin-top:22px"><a class="btn btn-primary" href="#invest" onclick="goal('cta_invest')">Перейти к покупке паёв →</a></div>
   </div>
 </section>
 
@@ -1117,12 +1146,14 @@ const DATA = %%CHART_DATA%%;
     const b=e.target.closest('button');if(!b)return;
     range=b.dataset.range;
     [...e.currentTarget.children].forEach(x=>x.classList.toggle('on',x===b));
+    goal('chart_range');
     render();
   });
   document.getElementById('modeSeg').addEventListener('click',e=>{
     const b=e.target.closest('button');if(!b)return;
     mode=b.dataset.mode;
     [...e.currentTarget.children].forEach(x=>x.classList.toggle('on',x===b));
+    goal('chart_mode');
     render();
   });
   window.addEventListener('resize',()=>{clearTimeout(window.__rt);window.__rt=setTimeout(render,120);});
