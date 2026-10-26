@@ -657,11 +657,11 @@ footer .disc p{margin:10px 0 0}
   <div class="wrap">
     <a class="brand" href="#top"><img src="%%LOGO%%" alt="">Матрёшка&nbsp;а-ля&nbsp;Рус</a>
     <div class="nav-links">
-      <a href="#manager">Управляющий</a>
-      <a href="#strategy">Стратегия</a>
-      <a href="#results">Результаты</a>
-      <a href="#invest">Как купить</a>
-      <a href="#faq">Вопросы</a>
+      <a href="#manager" onclick="goal('nav_manager')">Управляющий</a>
+      <a href="#strategy" onclick="goal('nav_strategy')">Стратегия</a>
+      <a href="#results" onclick="goal('nav_results')">Результаты</a>
+      <a href="#invest" onclick="goal('cta_invest')">Как купить</a>
+      <a href="#faq" onclick="goal('nav_faq')">Вопросы</a>
     </div>
     <a class="btn btn-primary" href="#invest" onclick="goal('cta_invest')">Инвестировать</a>
   </div>
