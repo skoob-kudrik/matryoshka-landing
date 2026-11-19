@@ -296,6 +296,19 @@ def build():
     qr_alfa = data_uri(ASSETS / "qrAlfa.png")
     logo_fin = data_uri(ASSETS / "Finuslugi.png")
     logo_alfa = data_uri(ASSETS / "Alfacapital.png")
+    # Альфа-Инвестиции (брокер при Альфа-Банке): пока файлов нет — временно
+    # подставляем лого/QR Альфа-Капитала, чтобы сборка не падала, и предупреждаем.
+    if (ASSETS / "AlfaInvest.png").exists():
+        logo_alfabank = data_uri(ASSETS / "AlfaInvest.png")
+    else:
+        logo_alfabank = logo_alfa
+        print("⚠ нет ассеты/AlfaInvest.png — временно беру лого Альфа-Капитала")
+    if (ASSETS / "qrAlfaInvest.png").exists():
+        qr_alfabank_block = ('<div class="qrmini"><img src="%s" alt="QR — Альфа-Инвестиции"></div>'
+                             % data_uri(ASSETS / "qrAlfaInvest.png"))
+    else:
+        qr_alfabank_block = ""  # QR ещё нет — блок не рисуем
+        print("⚠ нет ассеты/qrAlfaInvest.png — карточка Альфа-Банка пока без QR")
 
     # ── Яндекс.Метрика: сниппет счётчика + помощник goal() для целей-конверсий ──
     # goal() определяется всегда, поэтому onclick="goal(...)" не падает и без счётчика
@@ -327,6 +340,8 @@ def build():
         "%%QR_ALFA%%": qr_alfa,
         "%%LOGO_FIN%%": logo_fin,
         "%%LOGO_ALFA%%": logo_alfa,
+        "%%LOGO_ALFABANK%%": logo_alfabank,
+        "%%QR_ALFABANK_BLOCK%%": qr_alfabank_block,
         "%%CHART_DATA%%": chart_data,
         "%%MANAGER%%": manager,
         "%%POSITION%%": position,
@@ -894,6 +909,21 @@ footer .disc p{margin:10px 0 0}
         <div class="act">
           <a class="btn btn-primary" href="https://promo.alfacapital.ru/matryoshka-rus" target="_blank" rel="noopener" onclick="goal('buy_alfa')">Открыть →</a>
           <div class="qrmini"><img src="%%QR_ALFA%%" alt="QR — Альфа-Капитал"></div>
+        </div>
+      </div>
+
+      <div class="way">
+        <div class="num">
+          <div class="brandbox"><img class="brandlogo" src="%%LOGO_ALFABANK%%" alt="Альфа-Инвестиции"></div>
+        </div>
+        <div>
+          <h3>Онлайн через Альфа-Банк</h3>
+          <p>Покупка через мобильное приложение Альфа-Инвестиции — брокер при Альфа-Банке.</p>
+          <ol><li>Зарегистрируйтесь в приложении по логину-паролю от Альфа-Банка</li><li>Перейдите по ссылке / отсканируйте QR-код или найдите фонд через поиск по названию «Матрёшка а-ля Рус»</li><li>Подайте заявку на приобретение паёв</li></ol>
+        </div>
+        <div class="act">
+          <a class="btn btn-primary" href="https://alfa.me/Matreshka" target="_blank" rel="noopener" onclick="goal('buy_alfabank')">Открыть →</a>
+          %%QR_ALFABANK_BLOCK%%
         </div>
       </div>
 
